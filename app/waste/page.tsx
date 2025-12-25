@@ -82,7 +82,7 @@ export default function WasteLogging() {
               <select
                 value={form.category}
                 onChange={(e) => setForm({ ...form, category: e.target.value })}
-                className="w-full bg-transparent border-b-2 border-primary/10 py-3 text-lg focus:border-primary outline-none transition-colors appearance-none"
+                className="w-full bg-background border-b-2 border-primary/10 py-3 text-lg focus:border-primary outline-none transition-colors appearance-none"
               >
                 {["Plastic", "Paper", "Metal", "Glass", "Organic", "Other"].map(
                   (c) => (
