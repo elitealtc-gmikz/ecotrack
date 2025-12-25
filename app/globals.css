@@ -24,7 +24,22 @@
   --border: oklch(0.25 0.05 160 / 0.5);
   --input: oklch(0.25 0.05 160);
   --ring: oklch(0.7 0.25 160 / 0.4);
-  --radius: 1.5rem;
+
+  /* Responsive radius - smaller on mobile */
+  --radius: 0.75rem;
+}
+
+/* Larger radius for tablets and up */
+@media (min-width: 640px) {
+  :root {
+    --radius: 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --radius: 1.5rem;
+  }
 }
 
 .dark {
@@ -94,13 +109,84 @@
 }
 
 @layer utilities {
-  /* Enhanced glassmorphism with emerald glowing effects */
+  /* Enhanced glassmorphism with emerald glowing effects - responsive */
   .glass-card {
-    @apply bg-card backdrop-blur-2xl border border-primary/10 shadow-[0_8px_32px_0_rgba(0,255,128,0.05)];
+    @apply bg-card border border-primary/10;
+    /* Mobile: lighter blur and shadow */
+    backdrop-filter: blur(12px);
+    box-shadow: 0 4px 16px 0 rgba(0, 255, 128, 0.03);
   }
 
+  /* Tablet and up: enhanced blur */
+  @media (min-width: 640px) {
+    .glass-card {
+      backdrop-filter: blur(20px);
+      box-shadow: 0 6px 24px 0 rgba(0, 255, 128, 0.04);
+    }
+  }
+
+  /* Desktop: full effect */
+  @media (min-width: 1024px) {
+    .glass-card {
+      backdrop-filter: blur(32px);
+      box-shadow: 0 8px 32px 0 rgba(0, 255, 128, 0.05);
+    }
+  }
+
+  /* Responsive emerald glow */
   .emerald-glow {
-    @apply shadow-[0_0_40px_-10px_rgba(16,185,129,0.3)];
+    /* Mobile: subtle glow */
+    box-shadow: 0 0 20px -10px rgba(16, 185, 129, 0.2);
+  }
+
+  @media (min-width: 640px) {
+    .emerald-glow {
+      box-shadow: 0 0 30px -10px rgba(16, 185, 129, 0.25);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .emerald-glow {
+      box-shadow: 0 0 40px -10px rgba(16, 185, 129, 0.3);
+    }
+  }
+
+  /* Responsive text utilities */
+  .text-responsive-sm {
+    @apply text-sm sm:text-base;
+  }
+
+  .text-responsive-base {
+    @apply text-base sm:text-lg;
+  }
+
+  .text-responsive-lg {
+    @apply text-lg sm:text-xl lg:text-2xl;
+  }
+
+  .text-responsive-xl {
+    @apply text-xl sm:text-2xl lg:text-3xl;
+  }
+
+  .text-responsive-2xl {
+    @apply text-2xl sm:text-3xl lg:text-4xl;
+  }
+
+  .text-responsive-3xl {
+    @apply text-3xl sm:text-4xl lg:text-5xl xl:text-6xl;
+  }
+
+  /* Responsive spacing utilities */
+  .container-responsive {
+    @apply px-4 sm:px-6 lg:px-8 xl:px-12;
+  }
+
+  .section-spacing {
+    @apply py-8 sm:py-12 lg:py-16 xl:py-20;
+  }
+
+  .gap-responsive {
+    @apply gap-4 sm:gap-6 lg:gap-8;
   }
 }
 
@@ -108,10 +194,85 @@
   * {
     @apply border-border outline-ring/50;
   }
+
+  html {
+    /* Improve text rendering on all devices */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
   body {
     @apply bg-background text-foreground selection:bg-primary/20;
-    /* Subtle noise texture for a premium feel */
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    /* Responsive base font size */
+    font-size: 16px;
+
+    /* Subtle noise texture for a premium feel - responsive opacity */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.015'/%3E%3C/svg%3E");
     background-blend-mode: overlay;
+  }
+
+  /* Larger base font for desktop */
+  @media (min-width: 1024px) {
+    body {
+      font-size: 18px;
+    }
+  }
+
+  /* Ensure images are responsive by default */
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    @apply max-w-full h-auto;
+  }
+
+  /* Responsive headings */
+  h1 {
+    @apply text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold;
+  }
+
+  h2 {
+    @apply text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-semibold;
+  }
+
+  h3 {
+    @apply text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-semibold;
+  }
+
+  h4 {
+    @apply text-lg sm:text-xl lg:text-2xl font-medium;
+  }
+
+  h5 {
+    @apply text-base sm:text-lg lg:text-xl font-medium;
+  }
+
+  h6 {
+    @apply text-sm sm:text-base lg:text-lg font-medium;
+  }
+
+  /* Responsive paragraph spacing */
+  p {
+    @apply mb-4 sm:mb-5 lg:mb-6;
+  }
+
+  /* Touch-friendly interactive elements on mobile */
+  @media (max-width: 1023px) {
+    button,
+    a,
+    input,
+    select,
+    textarea {
+      min-height: 44px; /* Recommended minimum touch target size */
+      min-width: 44px;
+    }
+  }
+
+  /* Prevent horizontal scroll on small screens */
+  body,
+  html {
+    @apply overflow-x-hidden;
   }
 }
